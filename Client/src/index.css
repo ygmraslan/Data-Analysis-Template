@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+@keyframes drawLine {
+  0% { stroke-dashoffset: 200; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes pulseBar {
+  0% { transform: scaleY(0.6); transform-origin: bottom; }
+  100% { transform: scaleY(1.1); transform-origin: bottom; }
+}
+
+@keyframes riseUp {
+  0% { height: 0; opacity: 1; }
+  70% { height: 60px; opacity: 0.8; transform: translateY(-30px); }
+  100% { height: 90px; opacity: 0; transform: translateY(-70px); }
+}

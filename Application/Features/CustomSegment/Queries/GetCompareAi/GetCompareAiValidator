@@ -1,0 +1,46 @@
+namespace DataAnalysis.Application.Features.CustomSegment.Queries.GetCompareAi;
+
+public class GetCompareAiValidator : AbstractValidator<GetCompareAiQuery>
+{
+    public GetCompareAiValidator()
+    {
+        RuleFor(x => x.ProductGroup)
+            .NotEmpty().WithMessage("Ürün grubu gerekli.")
+            .Must(BeValidProductGroup).WithMessage("Geçersiz ürün grubu.");
+
+        RuleFor(x => x.ModelType)
+            .IsInEnum().WithMessage("Geçersiz AI model tipi.");
+
+        RuleFor(x => x.WeekStart)
+            .NotEmpty().WithMessage("Başlangıç tarihi gerekli.");
+
+        RuleFor(x => x.WeekEnd)
+            .NotEmpty().WithMessage("Bitiş tarihi gerekli.")
+            .GreaterThan(x => x.WeekStart).WithMessage("Bitiş tarihi başlangıçtan büyük olmalı.");
+
+        RuleFor(x => x.ResultA)
+            .NotNull().WithMessage("Segment A sonuç verisi gerekli.");
+
+        RuleFor(x => x.ResultB)
+            .NotNull().WithMessage("Segment B sonuç verisi gerekli.");
+
+        RuleFor(x => x)
+            .Must(q => IsAgeValid(q.FiltersA))
+            .WithMessage("Segment A: Tüzel müşteri seçildiğinde sigortalı yaşı yalnızca '0-17' olabilir.");
+
+        RuleFor(x => x)
+            .Must(q => IsAgeValid(q.FiltersB))
+            .WithMessage("Segment B: Tüzel müşteri seçildiğinde sigortalı yaşı yalnızca '0-17' olabilir.");
+    }
+
+    private static bool BeValidProductGroup(string productGroup)
+    {
+        return Enum.TryParse<ProductGroup>(productGroup, true, out _);
+    }
+
+    private static bool IsAgeValid(Dtos.SegmentFilterDto? filters)
+    {
+        if (filters == null) return true;
+        return InsuredTypeRule.IsAgeCombinationValid(filters.InsuredTypes, filters.InsuredAges);
+    }
+}

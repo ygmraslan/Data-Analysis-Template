@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/API/">
+    <Project Path="API/DataAnalysis.API.csproj" />
+  </Folder>
+  <Folder Name="/Application/">
+    <Project Path="Application/DataAnalysis.Application.csproj" />
+  </Folder>
+  <Folder Name="/Domain/">
+    <Project Path="Domain/DataAnalysis.Domain.csproj" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/DataAnalysis.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Persistence/">
+    <Project Path="Persistence/DataAnalysis.Persistence.csproj" />
+  </Folder>
+</Solution>
